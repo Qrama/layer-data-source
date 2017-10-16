@@ -18,7 +18,7 @@ import time
 from kafka import KafkaProducer
 import feedparser
 
-endpoint = "https://www.reddit.com/r/nfl/new/.rss"
+endpoint = "https://stackexchange.com/feeds/tagsets/303141/favorite-tags?sort=active"
 
 def main():
     recent_id = '0'
