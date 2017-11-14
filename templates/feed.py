@@ -15,7 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # pylint: disable=c0111,c0103,c0301,c0412
 import time
-from kafka import KafkaProducer
+import stomp
+import json
 import feedparser
 
 endpoint = "https://stackexchange.com/feeds/tagsets/303141/favorite-tags?sort=active"
@@ -28,9 +29,13 @@ def main():
             time.sleep(600)
         else:
             recent_id = d.entries[0].id
-            producer = KafkaProducer(bootstrap_servers='{{host}}:{{port}}')
+            conn = stomp.Connection([('{{host}}', {{port}})])
+            conn.start()
+            conn.connect()
             for entry in d.entries:
-                producer.send('{{topic}}', str.encode(str(entry)))
+                s=json.dumps(entry)
+                conn.send(destination='/topic/{{topic}}', body=s)
+            conn.disconnect()
             time.sleep(600)
 
 if __name__ == '__main__':

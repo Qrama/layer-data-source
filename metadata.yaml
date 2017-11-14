@@ -10,5 +10,5 @@ tags:
 subordinate: false
 requires:
   topic:
-    interface: kafka-topic
+    interface: activemq-topic
 series: ['xenial']
